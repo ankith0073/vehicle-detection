@@ -10,6 +10,7 @@ from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
 from skimage.feature import hog
 from sklearn.model_selection import train_test_split
+from vehicle_detec_class import veh_info
 
 import pickle
 
@@ -170,51 +171,33 @@ def draw_labeled_bboxes(img, labels):
 ystart = 400
 ystop = 656
 scale = 1.5
+number_of_frames_to_average = 15
 test_images = glob.glob('test_images/*.jpg')
 plt.figure()
-# i = 1
 
-# out_images = []
-# out_maps = []
-# for imgs in test_images:
-#     t1 = time.time()
-#
-#     img = mpimg.imread(imgs)
-#
-#     draw_img = np.copy(img)
-#     #img = img.astype(np.float32) / 255
-#     draw_img, heatmap = find_cars(img, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block,
-#                                     None, None)
-#     heatmap = apply_threshold(heatmap, 1)
-#     labels = label(heatmap)
-#     draw_img = draw_labeled_bboxes(np.copy(img), labels)
-#     out_images.append(draw_img)
-#     out_maps.append(heatmap)
-#
-#     plt.subplot(len(test_images), 3, i)
-#     plt.imshow(img)
-#     plt.title('Original_image')
-#     plt.axis('off')
-#
-#     plt.subplot(len(test_images),3, i+1)
-#     plt.imshow(heatmap, cmap='hot')
-#     plt.title('Heatmap')
-#     plt.axis('off')
-#
-#     plt.subplot(len(test_images), 3, i + 2)
-#     plt.imshow(draw_img)
-#     plt.title('Detected cars')
-#     plt.axis('off')
-#     i = i + 3
+
 
 i = 0
 plt.figure(1)
-def process_video_frame_instantaneous(img):
+def process_video_frame_instantaneous(img, detection):
     #draw_img = np.copy(img)
-    draw_img, heat = find_cars(img, ystart, ystop, scale, svc, None, orient, pix_per_cell, cell_per_block,
+    rectangles, heat = find_cars(img, ystart, ystop, scale, svc, None, orient, pix_per_cell, cell_per_block,
                                     None, None)
-    heat = apply_threshold(heat, 1)
+    if len(rectangles)> 0:
+        detection.update_rectangles(rectangles)
+    heat = np.zeros_like(img[:,:,0])
+    #for rect_set in detection.rectangles:
+    for rect_set in detection.rectangles:
+        heat = add_heat(heat, rect_set)
+
+    heat = apply_threshold(heat, 1 + len(detection.rectangles)//2)
+
+    # detection.update_circ_buf()
+    # detection.update_heatmap(heat)
+    # detection.get_best_fit()
+
     heatmap = np.clip(heat, 0, 255)
+    #heatmap = np.clip(heat, 0, 255)
     labels = label(heatmap)
 
 
@@ -238,8 +221,15 @@ output_video_folder = './'
 out_detected = imageio.get_writer(output_video_folder + 'output_' + input_video, fps=20)
 reader = imageio.get_reader('./' + input_video)
 
+
 for i, img in enumerate(reader):
-    draw_img = process_video_frame_instantaneous(img)
+
+    if i == 0:
+        detection = veh_info(number_of_frames_to_average, img.shape)
+        detection.n_avg = 1
+
+
+    draw_img = process_video_frame_instantaneous(img, detection)
     out_detected.append_data(draw_img)
 
 out_detected.close()
