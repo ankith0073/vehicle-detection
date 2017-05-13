@@ -16,7 +16,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 [image1]: ./output_images/HOG.png
-[image2]: ./otuput_images/non_HOG.png
+[image2]: ./output_images/non_HOG.png
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
@@ -57,7 +57,9 @@ orient = 9, pix_per_cell = 8, cell_per_block = 2
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features 
 
-A Support vector machine classfier was used to classify vehicle non-vehicle data. The features which was used was Histogram of oriented gradients. As a single feature was used Standard scalar was not used to make different features have same scaling!  
+A Support vector machine classfier was used to classify vehicle non-vehicle data. The features which was used was Histogram of oriented gradients. As a single feature was used Standard scalar was not used to make different features have same scaling!
+
+The code snippet for SVM training and find the test accuracy can be found in code cell [15] of the ipython notebook.
 
 ###Sliding Window Search
 
