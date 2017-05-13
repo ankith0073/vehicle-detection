@@ -104,5 +104,5 @@ Here's an example result showing the heatmap thresholding from a series of frame
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The pipeline is trained by handcrafting the features. To make the system more robust i would include a deep learning approach to make the system from a lot of examples, then the system is for sure not going to fail!. 
 
