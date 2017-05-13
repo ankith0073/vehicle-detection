@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image2]: ./output_images/non_HOG.png
 [image3]: ./output_images/hog-sub.jpg
 [image4]: ./output_images/test_images.png
-[image5]: ./examples/labels_and_output.png
+[image5]: ./output_images/labels_and_ouput.png
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
@@ -88,17 +88,13 @@ I recorded the positions of positive detections in each frame of the video.  Fro
 
 To filter the jittery vehicle detections, The positions of vehicles were fitlered over 15 consecutive frames which reduced the jittering frames by a significant amount!(Please note the length of averaging(Low pass filter is static and needs to be dynamic to handle more practical scenarios))
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+Here's an example result showing the heatmap thresholding from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here are six frames and their corresponding heatmaps:
+
+### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames and the boutnding boxes for all the frames:
 
 ![alt text][image5]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
 
 
 
