@@ -15,8 +15,8 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
+[image1]: ./output_images/HOG.png
+[image2]: ./otuput_images/non_HOG.png
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
@@ -30,34 +30,34 @@ The goals / steps of this project are the following:
 ---
 ###Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
-You're reading it!
 
 ###Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+####1. Histogram of Oriented Gradients (HOG) is the primary feature on which the SVM classifier is trained
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the second code cell of the IPython notebook(vechicle_detection.ipynb) 
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+The images of the car and non-car classes were read and the following parameters gave a good accuracy on test set with SVM classifier
+
+orient = 9, pix_per_cell = 8, cell_per_block = 2. The snippet on how HOG looks for car and non car images were as shown below 
 
 ![alt text][image1]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
-
 ![alt text][image2]
+
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+The main motivation behind playing with parametes of skimage.HOG() were to obtain good accuracy of classfication on the test set.
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+The following parameters gave an accuracy of more than 98% on test set
+orient = 9, pix_per_cell = 8, cell_per_block = 2
 
-I trained a linear SVM using...
+
+####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features 
+
+A Support vector machine classfier was used to classify vehicle non-vehicle data. The features which was used was Histogram of oriented gradients. As a single feature was used Standard scalar was not used to make different features have same scaling!  
 
 ###Sliding Window Search
 
