@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image2]: ./output_images/non_HOG.png
 [image3]: ./output_images/hog-sub.jpg
 [image4]: ./output_images/test_images.png
-[image5]: ./examples/bboxes_and_heat.png
+[image5]: ./examples/labels_and_output.png
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
